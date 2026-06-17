@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx --yes contextspin@^0.1.0 start >/dev/null 2>&1; exit 0",
+            "command": "npx --yes contextspin@^0.2.0 ensure >/dev/null 2>&1; exit 0",
             "timeout": 15
           }
         ]

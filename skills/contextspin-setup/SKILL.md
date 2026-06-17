@@ -4,92 +4,58 @@ description: >
   This skill should be used when the user wants to "setup contextspin",
   "configure contextspin", "add org context to the spinner", "connect my tools
   to the Claude spinner", "install contextspin", "show my PRs while Claude thinks",
-  or "replace the loading text with live data". Use this skill to guide the user
-  through a first-time setup or to reconfigure existing sources.
+  or "replace the loading text with live data". Use this skill to do a one-shot
+  setup or to reconfigure existing sources.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   npm: "https://www.npmjs.com/package/contextspin"
   github: "https://github.com/mannutech/contextspin"
 ---
 
 ## What ContextSpin does
 
-ContextSpin replaces Claude Code's whimsical spinner text ("Flibbertigibbeting…",
-"Discombobulating…") with live snippets from the user's own org — open PRs, Slack
-mentions, upcoming meetings, active incidents, failing CI, Jira tickets, and more.
-
-It works by polling user-configured **sources** and injecting the results into the
-Claude Code spinner or statusline while Claude is thinking.
+ContextSpin shows live snippets from the user's own org — open PRs, Slack mentions,
+upcoming meetings, incidents, failing CI — in the Claude Code statusline (default)
+or, opt-in, in the spinner words themselves. It polls user-configured **sources**
+and injects the results while Claude is thinking.
 
 ---
 
-## Setup flow
+## Do the setup in one pass
 
-Work through these steps in order. Do not skip ahead.
+Set this up in a single pass. Do NOT gate on step-by-step confirmations, do NOT
+show the config and wait for approval, and do NOT write long explanations. Detect,
+write, wire, report. Ask at most ONE brief question and only if truly required
+(e.g. a different config already exists at `~/.contextspin.json` and you'd overwrite
+it). Otherwise just do it.
 
-### Step 1 — Check installation
+### 1. Detect available sources
 
-Run a Bash command to check if `contextspin` is already installed:
+Pick a couple of high-value sources from what the user actually has:
 
-```bash
-npx contextspin@latest --version 2>/dev/null || echo "NOT_INSTALLED"
-```
+- **MCP servers in this session** — if the user has connected Slack, GitHub,
+  GitLab, Jira, Linear, Notion, Google Calendar, PagerDuty, Datadog, or Grafana,
+  those are available as `mcp` sources. See `references/source-examples.md` for
+  copy-paste configs.
+- **CLI tools** — one quick check:
+  ```bash
+  for c in gh glab kubectl; do command -v "$c" >/dev/null 2>&1 && echo "$c"; done
+  ```
 
-If not installed, tell the user to run:
-```bash
-npm install -g contextspin
-```
-Wait for them to confirm before continuing.
+### 2. Assemble a small Tier-1 config
 
-### Step 2 — Choose injection mode
-
-Ask the user which injection mode they want:
-
-- **Statusline** (recommended) — uses Claude Code's official statusline API. Safe,
-  survives updates, shows context in the bottom bar while Claude thinks.
-- **Spinner patcher** — replaces the actual spinning words. More visible, but needs
-  to be re-patched after each Claude Code update.
-- **Both** — statusline as primary, patcher as a bonus.
-
-Default to statusline unless they ask for the patcher.
-
-### Step 3 — Detect and configure sources
-
-Look at the conversation context for any MCP servers the user has connected. Common
-ones to look for: Slack, GitHub, GitLab, Jira, Linear, Notion, Google Calendar,
-PagerDuty, Datadog, Grafana.
-
-For each detected integration, suggest a ready-made source config from the reference
-file. See `references/source-examples.md` for copy-paste configs for each tool.
-
-Also ask: "Do you have any CLI tools you want to pull from? (e.g., `gh`, `kubectl`,
-`jira`)"
-
-Build the full `sources` array based on their answers.
-
-### Step 4 — Write the config
-
-Write the assembled config to `~/.contextspin.json` using Bash:
-
-```bash
-cat > ~/.contextspin.json << 'EOF'
-{
-  <assembled config here>
-}
-EOF
-```
-
-Show the user the config before writing and ask for confirmation.
-
-The config structure:
+Build a lean config with statusline mode and only a couple of high-value sources
+(don't pile on everything). Tier-1 = time-sensitive and actionable: PRs awaiting
+review, unread Slack @mentions, meetings in the next 30 min, active incidents,
+failing CI. If nothing is detected, fall back to a `gh` PR + CI pair (it costs
+nothing when `gh` is absent — that source just yields no snippets). An empty
+`sources` array is also valid (the daemon still wires up and shows nothing), but
+prefer seeding the `gh` pair so there's something to show.
 
 ```json
 {
-  "sources": [ /* assembled from Step 3 */ ],
-  "injection": {
-    "mode": "statusline",
-    "refresh": 30
-  },
+  "sources": [ /* a couple of Tier-1 sources */ ],
+  "injection": { "mode": "statusline", "refresh": 30 },
   "snippets": {
     "deduplication": true,
     "cooldownAfterShown": 3,
@@ -98,48 +64,30 @@ The config structure:
 }
 ```
 
-### Step 5 — Start and inject
+Use `"mode": "patcher"` ONLY if the user explicitly asked for the spinner words to
+change. Statusline is the default and is wired non-destructively (any existing
+statusline command is preserved and ContextSpin appends beneath it).
 
-Run these two commands:
+### 3. Write the config
 
 ```bash
-npx contextspin start
-npx contextspin inject
+cat > ~/.contextspin.json << 'EOF'
+{ <assembled config> }
+EOF
 ```
 
-Tell the user: "The daemon is now running. You'll see live snippets in your Claude
-Code spinner/statusline from your next session. You can check what's currently
-queued with `npx contextspin status`."
+### 4. Wire and start
 
----
+One command wires the statusline (non-destructively) and starts the daemon:
 
-## Priority guidance
+```bash
+npx --yes contextspin@^0.2.0 ensure
+```
 
-Help the user prioritize sources by impact tier:
+### 5. Report (2-3 lines)
 
-**Tier 1 (most valuable — time-sensitive, needs action):**
-- Upcoming meetings in next 30 min
-- Active PagerDuty/OpsGenie incidents
-- Failing CI on your own PRs
-- Unread Slack @mentions
-- PRs waiting for your review
+Tell the user what is now live and how to tweak it. For example:
 
-**Tier 2 (ambient ops awareness):**
-- Deployments in progress
-- K8s pod anomalies
-- Error rate spikes (Grafana/Datadog)
-
-**Tier 3 (work queue):**
-- Jira/Linear tickets due today
-- Sprint end date with open ticket count
-
-Recommend Tier 1 sources only for first setup. Suggest Tier 2/3 as opt-in.
-
----
-
-## Common mistakes to avoid
-
-- Do not write `~/.contextspin.json` without showing the user the content first.
-- Do not start the daemon until the config is confirmed.
-- If the user has no MCP servers connected, guide them toward `cli` type sources
-  using tools they likely have installed (`gh`, `kubectl`, `jira-cli`).
+> ContextSpin is live in your statusline, polling GitHub PRs and Slack mentions
+> every 30s. You'll see snippets from your next session.
+> Tweak sources in `~/.contextspin.json` or just ask me to add/remove a source.
