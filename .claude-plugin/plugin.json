@@ -1,6 +1,6 @@
 {
   "name": "contextspin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Replaces Claude Code's whimsical spinner with live org context — open PRs, incidents, meetings, Slack mentions, and more.",
   "author": {
     "name": "mannutech"
@@ -8,8 +8,5 @@
   "homepage": "https://github.com/mannutech/contextspin",
   "repository": "https://github.com/mannutech/contextspin",
   "license": "MIT",
-  "keywords": ["contextspin", "spinner", "org-context", "statusline", "developer-tools"],
-  "dependencies": [
-    { "name": "contextspin-core", "version": "^0.1.0" }
-  ]
+  "keywords": ["contextspin", "spinner", "org-context", "statusline", "developer-tools"]
 }
