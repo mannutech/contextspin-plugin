@@ -1,14 +1,17 @@
 {
-  "SessionStart": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "npx contextspin start --silent 2>/dev/null; exit 0",
-          "timeout": 15
-        }
-      ]
-    }
-  ]
+  "description": "Starts the ContextSpin daemon at session start so the spinner/statusline has fresh org context.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx contextspin start --silent 2>/dev/null; exit 0",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
 }
