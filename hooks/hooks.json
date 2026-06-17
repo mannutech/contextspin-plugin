@@ -1,0 +1,14 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx contextspin start --silent 2>/dev/null; exit 0",
+          "timeout": 15
+        }
+      ]
+    }
+  ]
+}
