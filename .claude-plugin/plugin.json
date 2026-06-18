@@ -1,7 +1,7 @@
 {
   "name": "contextspin",
-  "version": "0.3.2",
-  "description": "Shows the PRs/MRs awaiting your review in your Claude Code statusline.",
+  "version": "0.3.3",
+  "description": "Live snippets from the sources you configure — reviews, CI, weather, anything — in your Claude Code statusline.",
   "author": {
     "name": "mannutech"
   },
