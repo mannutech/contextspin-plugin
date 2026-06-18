@@ -7,11 +7,6 @@ user's `~/.contextspin.json` sources array during setup.
 
 ## Starter pack (no credentials needed)
 
-These three `http` sources work with zero setup — no tokens, no auth, no MCP — so
-they're handy for confirming the statusline is wired before you add real sources.
-`wttr.in` and `icanhazdadjoke` return plain text (mapped to `{{text}}`); the Hacker
-News Firebase API returns JSON.
-
 ### Weather (HTTP)
 
 ```json
@@ -31,10 +26,7 @@ News Firebase API returns JSON.
 {
   "type": "http",
   "url": "https://icanhazdadjoke.com/",
-  "headers": {
-    "Accept": "text/plain",
-    "User-Agent": "ContextSpin (github.com/mannutech/contextspin)"
-  },
+  "headers": { "Accept": "text/plain" },
   "format": "😄 {{text}}",
   "label": "joke",
   "cooldown": 3600,
@@ -42,24 +34,19 @@ News Firebase API returns JSON.
 }
 ```
 
-### Hacker News — top story (HTTP, Firebase API)
+### Hacker News — top story (HTTP)
 
 ```json
 {
   "type": "http",
   "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
   "jq": ".[0]",
-  "format": "📰 HN top: news.ycombinator.com/item?id={{value}}",
+  "format": "📰 HN top story #{{value}}",
   "label": "hackernews",
   "cooldown": 600,
   "maxSnippets": 1
 }
 ```
-
-> The Firebase API returns story **IDs**, so this surfaces a link to the top item.
-> A single source can't chain the second call (`/v0/item/<id>.json`) for the title;
-> for the title in one request use Algolia instead —
-> `https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=1` with `"jq": ".hits[0].title"`.
 
 ---
 
