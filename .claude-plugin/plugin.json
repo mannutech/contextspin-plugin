@@ -1,7 +1,7 @@
 {
   "name": "contextspin",
-  "version": "0.3.1",
-  "description": "Replaces Claude Code's whimsical spinner with live org context — open PRs, incidents, meetings, Slack mentions, and more.",
+  "version": "0.3.2",
+  "description": "Shows the PRs/MRs awaiting your review in your Claude Code statusline.",
   "author": {
     "name": "mannutech"
   },
