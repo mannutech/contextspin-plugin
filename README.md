@@ -6,6 +6,19 @@ incidents, failing CI, Jira tickets, Grafana metrics, and more.
 
 Built on top of the [contextspin](https://www.npmjs.com/package/contextspin) npm package.
 
+## Don't want the plugin? One-line install
+
+You don't need this plugin (or the marketplace) at all — the same setup is a
+single command, which wires a self-healing SessionStart hook directly into your
+`~/.claude/settings.json`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mannutech/contextspin/main/install.sh | bash
+```
+
+`npx contextspin install` does the same; `npx contextspin uninstall` removes
+everything. The plugin is just a marketplace-friendly wrapper around this.
+
 ## Components
 
 | Component | Purpose |
