@@ -36,12 +36,14 @@ user's `~/.contextspin.json` sources array during setup.
 
 ### Hacker News — top story (HTTP)
 
+Uses the Algolia HN API so the snippet shows the actual headline, not just a numeric id.
+
 ```json
 {
   "type": "http",
-  "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
-  "jq": ".[0]",
-  "format": "📰 HN top story #{{value}}",
+  "url": "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=1",
+  "jq": ".hits[0].title",
+  "format": "📰 HN: {{value}}",
   "label": "hackernews",
   "cooldown": 600,
   "maxSnippets": 1
