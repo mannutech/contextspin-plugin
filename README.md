@@ -1,10 +1,11 @@
 # ContextSpin Plugin
 
-Replaces Claude Code's whimsical spinner text ("Flibbertigibbeting…", "Discombobulating…")
-with live snippets from your org — open PRs, Slack mentions, upcoming meetings, active
-incidents, failing CI, Jira tickets, Grafana metrics, and more.
+Live context in your Claude Code **status bar** — weather, the top Hacker News story,
+PRs awaiting your review, failing CI, incidents, meetings — pulled from tools you
+already run. Auto-configures on install; the bar is never empty.
 
-Built on top of the [contextspin](https://www.npmjs.com/package/contextspin) npm package.
+The Claude Code plugin wrapper around the [contextspin](https://www.npmjs.com/package/contextspin)
+npm package.
 
 ## Don't want the plugin? One-line install
 
