@@ -36,6 +36,18 @@ Or edit `~/.contextspin.json` directly (see [source examples](skills/contextspin
 | "Remove the joke source" | Removes a source from your config |
 | "Turn off the colors" | Sets `injection.style: false` |
 
+## Uninstalling
+
+> ⚠️ **Removing this plugin does NOT remove ContextSpin from your statusline.**
+> The plugin is only a bootstrapper — the actual statusline wiring lives in your
+> `~/.claude/settings.json` and a background daemon, written there by the setup
+> hook. Claude can't clean those up when you remove the plugin. To fully remove
+> ContextSpin (restore your statusline, drop the hook, stop the daemon):
+>
+> ```bash
+> npx contextspin uninstall
+> ```
+
 ## Source types
 
 ContextSpin pulls from three source types — whatever you already have connected:

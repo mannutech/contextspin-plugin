@@ -45,7 +45,14 @@ confirmation gates, no essays.
 | start / stop / restart / refresh | `start` / `stop` / `restart` | "Daemon started/stopped/restarted." |
 | inject / wire / "not showing up" | `inject` | "Wired into your statusline (non-destructive)." |
 | uninject / remove from bar | `uninject` | "Removed from your statusline." |
+| uninstall / remove completely / "still showing after I removed the plugin" | `uninstall` | "Fully removed — statusline restored, hook dropped, daemon stopped." |
 | not working / fix it | `ensure` | Re-creates config, re-wires statusline, starts daemon. Report what `status` then shows. |
+
+> **Removing the plugin does NOT remove ContextSpin.** The statusline wiring
+> lives in `~/.claude/settings.json` + a background daemon, written by the setup
+> hook — Claude can't clean those up on plugin removal. If the user says "I
+> uninstalled the plugin but still see the text," run `uninstall` (full teardown:
+> restores the statusline, drops the SessionStart hook, stops the daemon).
 
 `status` prints the daemon state and cached snippets — present them as a short
 list, e.g.:
