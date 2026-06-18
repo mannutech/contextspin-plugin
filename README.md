@@ -10,42 +10,31 @@ Built on top of the [contextspin](https://www.npmjs.com/package/contextspin) npm
 
 | Component | Purpose |
 |---|---|
-| Skill: `contextspin-setup` | First-time setup wizard — detects your connected MCPs and writes `~/.contextspin.json` |
-| Skill: `contextspin-manage` | Check status, view live snippets, add/remove sources, troubleshoot |
+| Skill: `contextspin` | One skill for everything — status, add/remove sources, tweaks, troubleshooting |
 | MCP Server: `contextspin` | Exposes daemon control and live snippet data to Claude |
-| Hook: SessionStart | Auto-starts the polling daemon at the beginning of each session |
-
-## Prerequisites
-
-Install the `contextspin` npm package:
-
-```bash
-npm install -g contextspin
-```
+| Hook: SessionStart | Auto-configures + starts the polling daemon at the beginning of each session |
 
 ## Setup
 
-After installing the plugin, ask Claude:
+Nothing to do. After installing the plugin, the SessionStart hook auto-configures
+a no-credentials starter pack (weather, a dad joke, the top Hacker News story) and
+wires your statusline — so the bar is live (and never empty) from the next session.
 
-> "Setup contextspin"
+Just ask Claude when you want to change anything:
 
-Claude will walk you through connecting your tools and writing your config.
+> "Add my GitHub review requests to the statusline"
 
-Or set it up manually:
-
-1. Write `~/.contextspin.json` (see [source examples](skills/contextspin-setup/references/source-examples.md))
-2. Run `npx contextspin inject` to install the statusline/patcher
-3. Run `npx contextspin start` to start the daemon
+Or edit `~/.contextspin.json` directly (see [source examples](skills/contextspin/references/source-examples.md)).
 
 ## Usage
 
 | What you say | What happens |
 |---|---|
-| "Setup contextspin" | Guided first-time config wizard |
-| "What's in my spinner right now?" | Shows live snippets from cache |
+| "What's in my statusline right now?" | Shows live snippets from cache |
 | "Contextspin isn't working" | Diagnoses and fixes daemon/injection issues |
-| "Add my Jira tickets to the spinner" | Adds a new source to your config |
-| "Remove the Grafana source" | Removes a source from your config |
+| "Add my Jira tickets to the statusline" | Adds a new source to your config |
+| "Remove the joke source" | Removes a source from your config |
+| "Turn off the colors" | Sets `injection.style: false` |
 
 ## Source types
 
@@ -55,7 +44,7 @@ ContextSpin pulls from three source types — whatever you already have connecte
 - **`cli`** — any local shell command (`gh`, `kubectl`, custom scripts)
 - **`http`** — any HTTP endpoint (Grafana, PagerDuty, internal APIs)
 
-See [source-examples.md](skills/contextspin-setup/references/source-examples.md) for ready-made configs.
+See [source-examples.md](skills/contextspin/references/source-examples.md) for ready-made configs.
 
 ## MCP Tools
 
