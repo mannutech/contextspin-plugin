@@ -25,10 +25,21 @@ starter pack (weather, joke, Hacker News) and the bar is never empty. So don't
 
 ## Do it in one pass
 
-Run the right `npx --yes contextspin@^0.5.0 <cmd>` for what the user asked, then
-report in 1–3 lines. No confirmation gates, no essays.
+Run the right command for what the user asked, then report in 1–3 lines. No
+confirmation gates, no essays.
 
-| User asks | Command | Then say |
+> **Always run `npx` from a neutral directory** (e.g. prefix with `cd /tmp &&`).
+> If the current working directory is the `contextspin` source repo — or any dir
+> whose `package.json` is named `contextspin` — `npx` resolves the un-linked local
+> package and fails with `Exit 127: contextspin: command not found`. The CLI
+> operates on absolute `~/.contextspin*` paths regardless of cwd, so `cd /tmp`
+> is always safe. Canonical form:
+>
+> ```bash
+> cd /tmp && npx --yes contextspin@^0.5.0 <cmd>
+> ```
+
+| User asks | `<cmd>` | Then say |
 |---|---|---|
 | status / "what's in my statusline" | `status` | List the cached snippets (or note it's empty/stale) |
 | start / stop / restart / refresh | `start` / `stop` / `restart` | "Daemon started/stopped/restarted." |
@@ -63,7 +74,7 @@ c.sources.push({type:'http',url:'https://wttr.in/?format=3',format:'🌤️ {{te
 // or remove one by label:
 // c.sources = c.sources.filter(s => s.label !== 'joke');
 fs.writeFileSync(p,JSON.stringify(c,null,2));"
-npx --yes contextspin@^0.5.0 restart
+cd /tmp && npx --yes contextspin@^0.5.0 restart
 ```
 
 - **Disable the styled box / colors:** set `injection.style` to `false`.
