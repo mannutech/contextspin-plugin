@@ -24,7 +24,13 @@ curl -fsSL https://raw.githubusercontent.com/mannutech/contextspin/main/install.
 
 ## Setup
 
-Nothing to do. On install, the hook seeds a no-credentials starter pack (weather, a dad joke, the top HN story) and wires your statusline — live and never empty from the next session. Then just ask Claude:
+Nothing to do. On install, the hook seeds a no-credentials starter pack (weather, a dad joke, the top HN story) and wires your statusline — live and never empty from the next session.
+
+![Statusline](screenshots/statusline.svg)
+
+![Status command](screenshots/status-command.svg)
+
+Then just ask Claude:
 
 > "Add my GitHub review requests to the statusline" · "Remove the joke source" · "Turn off the colors"
 
