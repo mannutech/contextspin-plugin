@@ -1,6 +1,6 @@
 {
   "name": "contextspin",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Live snippets from the sources you configure — reviews, CI, weather, anything — in your Claude Code statusline.",
   "author": {
     "name": "mannutech"
