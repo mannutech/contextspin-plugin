@@ -9,7 +9,7 @@ description: >
   ContextSpin auto-configures on install, so there is rarely anything to "set up"
   — this skill is mostly for inspecting and tweaking sources.
 metadata:
-  version: "0.6.0"
+  version: "0.6.3"
   npm: "https://www.npmjs.com/package/contextspin"
   github: "https://github.com/mannutech/contextspin"
 ---
@@ -36,7 +36,7 @@ confirmation gates, no essays.
 > is always safe. Canonical form:
 >
 > ```bash
-> cd /tmp && npx --yes contextspin@^0.5.0 <cmd>
+> cd /tmp && npx --yes contextspin@0.6.3 <cmd>
 > ```
 
 | User asks | `<cmd>` | Then say |
@@ -81,7 +81,7 @@ c.sources.push({type:'http',url:'https://wttr.in/?format=3',format:'🌤️ {{te
 // or remove one by label:
 // c.sources = c.sources.filter(s => s.label !== 'joke');
 fs.writeFileSync(p,JSON.stringify(c,null,2));"
-cd /tmp && npx --yes contextspin@^0.5.0 restart
+cd /tmp && npx --yes contextspin@0.6.3 restart
 ```
 
 - **Disable the styled box / colors:** set `injection.style` to `false`.

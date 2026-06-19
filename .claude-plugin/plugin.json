@@ -1,6 +1,6 @@
 {
   "name": "contextspin",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Live snippets from the sources you configure — reviews, CI, weather, anything — in your Claude Code statusline.",
   "author": {
     "name": "mannutech"
@@ -8,5 +8,11 @@
   "homepage": "https://github.com/mannutech/contextspin",
   "repository": "https://github.com/mannutech/contextspin",
   "license": "MIT",
-  "keywords": ["contextspin", "spinner", "org-context", "statusline", "developer-tools"]
+  "keywords": [
+    "contextspin",
+    "spinner",
+    "org-context",
+    "statusline",
+    "developer-tools"
+  ]
 }
