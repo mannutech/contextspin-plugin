@@ -9,19 +9,25 @@ description: >
   ContextSpin auto-configures on install, so there is rarely anything to "set up"
   — this skill is mostly for inspecting and tweaking sources.
 metadata:
-  version: "0.6.4"
+  version: "0.7.0"
   npm: "https://www.npmjs.com/package/contextspin"
   github: "https://github.com/mannutech/contextspin"
 ---
 
 ContextSpin shows live snippets — weather, a fresh joke, the top Hacker News
 story, PRs awaiting your review, and anything else you configure — in the Claude
-Code statusline. It polls user-configured **sources** and composes the result
-non-destructively beneath any existing statusline.
+Code statusline. It composes the result non-destructively beneath any existing
+statusline.
 
 **It already works on install.** The SessionStart hook seeds a no-credentials
 starter pack (weather, joke, Hacker News) and the bar is never empty. So don't
 "set it up" from scratch unless the user asks — just inspect or tweak.
+
+**No daemon by default (daemonless engine).** The statusline render refreshes
+itself: it serves the cached snippet instantly and triggers a detached one-shot
+refresh when a source is due. There is no background process to start/stop — to
+force a refresh now, run `refresh`. (A legacy always-on daemon exists behind
+`injection.daemonless: false`, for stdio MCP sources only.)
 
 ## Do it in one pass
 
@@ -36,17 +42,17 @@ confirmation gates, no essays.
 > is always safe. Canonical form:
 >
 > ```bash
-> cd /tmp && npx --yes contextspin@0.6.4 <cmd>
+> cd /tmp && npx --yes contextspin@0.7.0 <cmd>
 > ```
 
 | User asks | `<cmd>` | Then say |
 |---|---|---|
 | status / "what's in my statusline" | `status` | List the cached snippets (or note it's empty/stale) |
-| start / stop / restart / refresh | `start` / `stop` / `restart` | "Daemon started/stopped/restarted." |
+| refresh / "update now" / "it's stale" | `refresh` | "Refreshed — re-polled all due sources." |
 | inject / wire / "not showing up" | `inject` | "Wired into your statusline (non-destructive)." |
 | uninject / remove from bar | `uninject` | "Removed from your statusline." |
-| uninstall / remove completely / "still showing after I removed the plugin" | `uninstall` | "Fully removed — statusline restored, hook dropped, daemon stopped." |
-| not working / fix it | `ensure` | Re-creates config, re-wires statusline, starts daemon. Report what `status` then shows. |
+| uninstall / remove completely / "still showing after I removed the plugin" | `uninstall` | "Fully removed — statusline restored, hook dropped." |
+| not working / fix it | `ensure` | Re-creates config + re-wires statusline. Report what `status` then shows. |
 
 > **Removing the plugin does NOT remove ContextSpin.** The statusline wiring
 > lives in `~/.claude/settings.json` + a background daemon, written by the setup
@@ -58,14 +64,14 @@ confirmation gates, no essays.
 list, e.g.:
 
 ```
-Statusline is live (daemon up, 4 sources):
+Engine: daemonless · 4 sources
 • 🌤️ Dubai, Dubai, AE: ☀️ +33°C
 • 😄 Why do programmers prefer dark mode? Because light attracts bugs.
 • 📰 HN: Swiss parliament lifts ban on new nuclear power plants
 ```
 
-If `status` shows the daemon down or the statusline missing, run `ensure`
-(idempotent: re-creates config + re-wires + starts) and report the new `status`.
+If `status` shows the statusline missing or the cache empty/stale, run `ensure`
+(idempotent: re-creates config + re-wires) then `refresh`, and report `status`.
 
 ## Add / remove / tweak a source
 
@@ -81,7 +87,7 @@ c.sources.push({type:'http',url:'https://wttr.in/?format=3',format:'🌤️ {{te
 // or remove one by label:
 // c.sources = c.sources.filter(s => s.label !== 'joke');
 fs.writeFileSync(p,JSON.stringify(c,null,2));"
-cd /tmp && npx --yes contextspin@0.6.4 restart
+cd /tmp && npx --yes contextspin@0.7.0 refresh
 ```
 
 - **Disable the styled box / colors:** set `injection.style` to `false`.
