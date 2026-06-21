@@ -9,7 +9,7 @@ description: >
   ContextSpin auto-configures on install, so there is rarely anything to "set up"
   — this skill is mostly for inspecting and tweaking sources.
 metadata:
-  version: "0.7.1"
+  version: "0.8.0"
   npm: "https://www.npmjs.com/package/contextspin"
   github: "https://github.com/mannutech/contextspin"
 ---
@@ -20,8 +20,9 @@ Code statusline. It composes the result non-destructively beneath any existing
 statusline.
 
 **It already works on install.** The SessionStart hook seeds a no-credentials
-starter pack (weather, joke, Hacker News) and the bar is never empty. So don't
-"set it up" from scratch unless the user asks — just inspect or tweak.
+starter pack (weather, joke, Hacker News, AI papers, Dev.to, a daily quote) and
+the bar is never empty. So don't "set it up" from scratch unless the user asks —
+just inspect or tweak.
 
 **No daemon by default (daemonless engine).** The statusline render refreshes
 itself: it serves the cached snippet instantly and triggers a detached one-shot
@@ -42,7 +43,7 @@ confirmation gates, no essays.
 > is always safe. Canonical form:
 >
 > ```bash
-> cd /tmp && npx --yes contextspin@0.7.1 <cmd>
+> cd /tmp && npx --yes contextspin@0.8.0 <cmd>
 > ```
 
 | User asks | `<cmd>` | Then say |
@@ -87,7 +88,7 @@ c.sources.push({type:'http',url:'https://wttr.in/?format=3',format:'🌤️ {{te
 // or remove one by label:
 // c.sources = c.sources.filter(s => s.label !== 'joke');
 fs.writeFileSync(p,JSON.stringify(c,null,2));"
-cd /tmp && npx --yes contextspin@0.7.1 refresh
+cd /tmp && npx --yes contextspin@0.8.0 refresh
 ```
 
 - **Disable the styled box / colors:** set `injection.style` to `false`.

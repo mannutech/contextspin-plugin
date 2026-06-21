@@ -1,6 +1,6 @@
 # ContextSpin Plugin
 
-Live context in your Claude Code **status bar** — weather, the top Hacker News story, PRs awaiting your review, failing CI, incidents, meetings — pulled from tools you already run. Auto-configures on install; the bar is never empty.
+Live context in your Claude Code **status bar** — weather, the top Hacker News stories, fresh AI research papers, dev articles, PRs awaiting your review, failing CI, incidents, meetings — pulled from tools you already run. Auto-configures on install; the bar is never empty.
 
 A thin Claude Code plugin wrapper around the [contextspin](https://www.npmjs.com/package/contextspin) npm package.
 
@@ -24,7 +24,7 @@ curl -fsSL https://raw.githubusercontent.com/mannutech/contextspin/main/install.
 
 ## Setup
 
-Nothing to do. On install, the hook seeds a no-credentials starter pack (weather, a dad joke, the top HN story) and wires your statusline — live and never empty from the next session.
+Nothing to do. On install, the hook seeds a no-credentials starter pack (weather, a dad joke, top HN stories, AI research papers, dev articles, a daily quote) and wires your statusline — live and never empty from the next session.
 
 ![Statusline](screenshots/statusline.svg)
 
