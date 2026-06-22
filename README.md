@@ -2,6 +2,10 @@
 
 Live context in your Claude Code **status bar** — weather, the top Hacker News stories, fresh AI research papers, dev articles, PRs awaiting your review, failing CI, incidents, meetings — pulled from tools you already run. Auto-configures on install; the bar is never empty.
 
+![ContextSpin composing live GitLab merge requests beneath your own statusline](screenshots/statusline.svg)
+
+*Your existing statusline stays on top; the ContextSpin line is composed beneath it — never replacing it.*
+
 A thin Claude Code plugin wrapper around the [contextspin](https://www.npmjs.com/package/contextspin) npm package.
 
 ## Don't need the plugin?
@@ -26,9 +30,11 @@ curl -fsSL https://raw.githubusercontent.com/mannutech/contextspin/main/install.
 
 Nothing to do. On install, the hook seeds a no-credentials starter pack (weather, a dad joke, top HN stories, AI research papers, dev articles, a daily quote) and wires your statusline — live and never empty from the next session.
 
-![Statusline](screenshots/statusline.svg)
+![contextspin status listing cached snippets](screenshots/status-command.svg)
 
-![Status command](screenshots/status-command.svg)
+The bar is **never empty** — before you've wired anything (or when every source is quiet), it rotates through a built-in joke and onboarding hints:
+
+![A joke keeping the status bar alive](screenshots/statusline-joke.svg)
 
 Then just ask Claude:
 
